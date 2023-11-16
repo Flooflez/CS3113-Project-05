@@ -237,7 +237,7 @@ void update()
     }
 
     if (g_current_scene->get_state().player->get_position().y > -5.5f) {
-        cam_y = -g_current_scene->get_state().player->get_position().y ;
+        cam_y = -g_current_scene->get_state().player->get_position().y + 0.05f;
     }
 
     g_view_matrix = glm::translate(g_view_matrix, glm::vec3(cam_x, cam_y, 0));

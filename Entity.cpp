@@ -26,6 +26,7 @@
 #include "Entity.h"
 #include "Utility.h"
 
+
 Entity::Entity()
 {
     // ––––– PHYSICS ––––– //
@@ -254,9 +255,9 @@ void Entity::update(float delta_time, Entity* player, Entity* objects, int objec
         if (glm::length(m_movement) != 0)
         {
             m_animation_time += delta_time;
-            float frames_per_second = 1.0f / SECONDS_PER_FRAME;
+            float seconds_per_frame = 1.0f / FRAMES_PER_SECOND;
 
-            if (m_animation_time >= frames_per_second)
+            if (m_animation_time >= seconds_per_frame)
             {
                 m_animation_time = 0.0f;
                 m_animation_index++;
@@ -412,13 +413,13 @@ void const Entity::check_collision_x(Map* map)
 
     if (map->is_solid(left, &penetration_x, &penetration_y) && m_velocity.x < 0)
     {
-        m_position.x += penetration_x;
+        m_position.x += penetration_x + 0.01f;
         m_base_velocity.x = 0;
         m_collided_left = true;
     }
     if (map->is_solid(right, &penetration_x, &penetration_y) && m_velocity.x > 0)
     {
-        m_position.x -= penetration_x;
+        m_position.x -= penetration_x + 0.01f;
         m_base_velocity.x = 0;
         m_collided_right = true;
     }

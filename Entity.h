@@ -42,7 +42,7 @@ private:
 
 public:
     // ————— STATIC VARIABLES ————— //
-    static const int    SECONDS_PER_FRAME = 4;
+    static const int FRAMES_PER_SECOND = 6;
     static const int    LEFT    = 0,
                         RIGHT   = 1,
                         UP      = 2,
