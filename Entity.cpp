@@ -43,7 +43,6 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-    delete m_projectile_pointer;
     delete[] m_animation_up;
     delete[] m_animation_down;
     delete[] m_animation_left;
@@ -95,24 +94,7 @@ void Entity::activate() {
 };
 void Entity::deactivate() { 
     m_is_active = false; 
-    if (m_projectile_pointer != nullptr) {
-        delete m_projectile_pointer;
-        m_projectile_pointer = nullptr;
-    }
 };
-
-
-void Entity::shoot_projectile(glm::vec3 direction, float speed, glm::vec3 scale, glm::vec3 size)
-{
-    m_projectile_pointer = new Entity();
-    m_projectile_pointer->m_texture_id = m_projectile_texture_id;
-    m_projectile_pointer->set_speed(speed);
-    m_projectile_pointer->set_movement(direction);
-    m_projectile_pointer->set_position(m_position);
-    m_projectile_pointer->set_scale(scale);
-    m_projectile_pointer->set_height(size.y);
-    m_projectile_pointer->set_width(size.x);
-}
 
 
 
@@ -132,14 +114,6 @@ void const Entity::check_collision_y(Entity* collidable_entities, int collidable
                 m_base_velocity.y = m_jumping_power/2.0f; //mini jump when stomping
             }
         }
-
-        if (collidable_entity->m_projectile_pointer != nullptr) {
-
-            if (check_collision(collidable_entity->m_projectile_pointer))
-            {
-                deactivate();
-            }
-        }
     }
 }
 
@@ -154,13 +128,6 @@ void const Entity::check_collision_x(Entity* collidable_entities, int collidable
             deactivate();
         }
 
-        if (collidable_entity->m_projectile_pointer != nullptr) {
-
-            if (check_collision(collidable_entity->m_projectile_pointer))
-            {
-                deactivate();
-            }
-        }
     }
 }
 
@@ -242,12 +209,6 @@ void const Entity::check_collision_x(Map* map)
         m_position.x -= penetration_x + 0.01f;
         m_base_velocity.x = 0;
         m_collided_right = true;
-    }
-}
-
-void Entity::render_projectile(ShaderProgram* program) {
-    if (m_projectile_pointer != nullptr) {
-        m_projectile_pointer->render(program);
     }
 }
 

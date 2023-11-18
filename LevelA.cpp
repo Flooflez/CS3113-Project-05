@@ -101,7 +101,6 @@ void LevelA::initialise()
     m_state.enemies[0].set_height(0.8f);
     m_state.enemies[0].set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
 
-    m_state.enemies[0].m_projectile_texture_id = Utility::load_texture("assets/images/projectile.png");
 
 
     //enemy 2
@@ -148,7 +147,6 @@ void LevelA::initialise()
     m_state.enemies[2].set_width(0.6f);
     m_state.enemies[2].set_height(0.8f);
     m_state.enemies[2].set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
-    m_state.enemies[2].m_projectile_texture_id = Utility::load_texture("assets/images/projectile.png");
     
     /**
      BGM and SFX
@@ -181,6 +179,5 @@ void LevelA::render(ShaderProgram *program)
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
         m_state.enemies[i].render(program);
-        m_state.enemies[i].render_projectile(program);
     }
 }

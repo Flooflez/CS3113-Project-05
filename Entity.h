@@ -1,8 +1,6 @@
 #pragma once
 #include "Map.h"
 
-enum EntityType { PLATFORM, PLAYER, ENEMY, PROJECTILE };
-
 
 class Entity
 {
@@ -28,7 +26,6 @@ protected:
 
 
     // ————— ENEMY AI ————— //
-    Entity*    m_projectile_pointer = nullptr;
 
     float m_width = 1;
     float m_height = 1;
@@ -72,7 +69,6 @@ public:
     bool m_collided_right   = false;
 
     GLuint    m_texture_id;
-    GLuint    m_projectile_texture_id;
 
     // ————— METHODS ————— //
     Entity();
@@ -81,7 +77,6 @@ public:
     void draw_sprite_from_texture_atlas(ShaderProgram* program, GLuint texture_id, int index);
     virtual void update(float delta_time, Entity* player, Entity* objects, int object_count, Map* map) = 0; // Now, update should check for both objects in the game AND the map
     void render(ShaderProgram* program);
-    void render_projectile(ShaderProgram* program);
 
     bool const check_collision(Entity* other) const;
     
@@ -98,8 +93,6 @@ public:
     void move_up()      { m_movement.y = 1.0f; };
     void move_down()    { m_movement.y = -1.0f; };
 
-    virtual void shoot_projectile(glm::vec3 direction, float speed, glm::vec3 scale, glm::vec3 size);
-
     void activate();
     void deactivate();
 
@@ -115,7 +108,6 @@ public:
     int        const get_width()          const { return m_width;           };
     int        const get_height()         const { return m_height;          };
     bool       const get_active()         const { return m_is_active;       };
-    Entity*    const get_projectile()     const { return m_projectile_pointer;};
 
     // ————— SETTERS ————— //
     void const set_position(glm::vec3 new_position)         { m_position = new_position;            };

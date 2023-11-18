@@ -16,14 +16,6 @@ void const Player::check_collision_y(Entity* collidable_entities, int collidable
                 m_base_velocity.y = m_jumping_power / 2.0f; //mini jump when stomping
             }
         }
-
-        if (collidable_entity->get_projectile() != nullptr) {
-
-            if (check_collision(collidable_entity->get_projectile()))
-            {
-                deactivate();
-            }
-        }
     }
 }
 
@@ -38,13 +30,6 @@ void const Player::check_collision_x(Entity* collidable_entities, int collidable
             deactivate();
         }
 
-        if (collidable_entity->get_projectile() != nullptr) {
-
-            if (check_collision(collidable_entity->get_projectile()))
-            {
-                deactivate();
-            }
-        }
     }
 }
 
@@ -56,7 +41,6 @@ void Player::update(float delta_time, Entity* player, Entity* objects, int objec
     m_collided_bottom = false;
     m_collided_left = false;
     m_collided_right = false;
-
 
 
     if (m_animation_indices != NULL)
