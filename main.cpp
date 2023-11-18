@@ -35,6 +35,8 @@
 #include "Utility.h"
 #include "Scene.h"
 #include "LevelA.h"
+#include "LevelB.h"
+#include "LevelC.h"
 
 // ————— CONSTANTS ————— //
 const int   WINDOW_WIDTH    = 640,
@@ -63,6 +65,8 @@ const std::string DEATH_MESSAGE = "YOU LOSE! BETTER LUCK NEXT TIME!",
 // ————— GLOBAL VARIABLES ————— //
 Scene*  g_current_scene;
 LevelA* g_level_a;
+LevelB* g_level_b;
+LevelC* g_level_c;
 
 SDL_Window* g_display_window;
 bool g_game_is_running = true;
@@ -77,6 +81,8 @@ float g_previous_ticks  = 0.0f;
 float g_accumulator     = 0.0f;
 
 GLuint g_text_texture_id;
+
+Scene* g_levels[3];
 
 void lose_game() {
     g_game_over = true;
@@ -127,8 +133,19 @@ void initialise()
     glClearColor(BG_RED, BG_BLUE, BG_GREEN, BG_OPACITY);
 
     // ————— LEVEL A SETUP ————— //
+
     g_level_a = new LevelA();
-    switch_to_scene(g_level_a);
+    g_level_b = new LevelB();
+    g_level_c = new LevelC();
+
+    g_levels[0] = g_level_a;
+    g_levels[1] = g_level_b;
+    g_levels[2] = g_level_c;
+
+    // Start at level A
+    switch_to_scene(g_levels[0]);
+
+    
 
     // ————— BLENDING ————— //
     glEnable(GL_BLEND);
@@ -300,6 +317,9 @@ int main(int argc, char* argv[])
     {
         process_input();
         update();
+
+        if (g_current_scene->m_state.next_scene_id >= 0) switch_to_scene(g_levels[g_current_scene->m_state.next_scene_id]);
+
         render();
     }
 

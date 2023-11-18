@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 
-enum AIType { FLOATER, JUMPER, SHOOTER };
+enum AIType { BASIC };
 enum AIState { WALKING, IDLE, ATTACKING };
 
 class Enemy : public Entity {
@@ -9,9 +9,7 @@ class Enemy : public Entity {
     AIState    m_ai_state;
 
     void ai_activate(Entity* player, float delta_time);
-    void ai_float(Entity* player, float delta_time);
-    void ai_jump(Entity* player, float delta_time);
-    void ai_shoot(Entity* player, float delta_time);
+    void ai_basic(Entity* player, float delta_time);
 
     void const check_collision_y(Entity* collidable_entities, int collidable_entity_count) override;
     void const check_collision_x(Entity* collidable_entities, int collidable_entity_count) override;

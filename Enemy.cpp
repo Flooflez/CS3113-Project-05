@@ -4,16 +4,8 @@ void Enemy::ai_activate(Entity* player, float delta_time)
 {
     switch (m_ai_type)
     {
-    case FLOATER:
-        ai_float(player, delta_time);
-        break;
-
-    case JUMPER:
-        ai_jump(player, delta_time);
-        break;
-
-    case SHOOTER:
-        ai_shoot(player, delta_time);
+    case BASIC:
+        ai_basic(player, delta_time);
         break;
 
     default:
@@ -21,19 +13,11 @@ void Enemy::ai_activate(Entity* player, float delta_time)
     }
 }
 
-void Enemy::ai_float(Entity* player, float delta_time)
+void Enemy::ai_basic(Entity* player, float delta_time)
 {
     
 }
 
-void Enemy::ai_jump(Entity* player, float delta_time)
-{
-}
-
-void Enemy::ai_shoot(Entity* player, float delta_time)
-{
-    
-}
 
 void const Enemy::check_collision_y(Entity* collidable_entities, int collidable_entity_count)
 {

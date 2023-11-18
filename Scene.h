@@ -16,6 +16,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Goal.h"
 #include "Map.h"
 
 /**
@@ -27,13 +28,14 @@ struct GameState
     Map *map;
     Player *player;
     Enemy *enemies;
+    Goal* goal;
     
     // ————— AUDIO ————— //
     Mix_Music *bgm;
     Mix_Chunk *jump_sfx;
     
     // ————— POINTERS TO OTHER SCENES ————— //
-    int next_scene_id;
+    int next_scene_id = -1;
 };
 
 class Scene {
