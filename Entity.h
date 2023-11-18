@@ -2,12 +2,11 @@
 #include "Map.h"
 
 enum EntityType { PLATFORM, PLAYER, ENEMY, PROJECTILE };
-enum AIType     { FLOATER, JUMPER, SHOOTER };
-enum AIState    { WALKING, IDLE, ATTACKING };
+
 
 class Entity
 {
-private:
+protected:
     bool m_is_active = true;
 
     // ––––– ANIMATION ––––– //
@@ -29,9 +28,6 @@ private:
 
 
     // ————— ENEMY AI ————— //
-    EntityType m_entity_type;
-    AIType     m_ai_type;
-    AIState    m_ai_state;
     Entity*    m_projectile_pointer = nullptr;
 
     float m_width = 1;
@@ -83,18 +79,18 @@ public:
     ~Entity();
 
     void draw_sprite_from_texture_atlas(ShaderProgram* program, GLuint texture_id, int index);
-    void update(float delta_time, Entity* player, Entity* objects, int object_count, Map* map); // Now, update should check for both objects in the game AND the map
+    virtual void update(float delta_time, Entity* player, Entity* objects, int object_count, Map* map) = 0; // Now, update should check for both objects in the game AND the map
     void render(ShaderProgram* program);
     void render_projectile(ShaderProgram* program);
 
     bool const check_collision(Entity* other) const;
     
-    void const check_collision_y(Entity* collidable_entities, int collidable_entity_count);
-    void const check_collision_x(Entity* collidable_entities, int collidable_entity_count);
+    virtual void const check_collision_y(Entity* collidable_entities, int collidable_entity_count);
+    virtual void const check_collision_x(Entity* collidable_entities, int collidable_entity_count);
 
     // Overloading our methods to check for only the map
-    void const check_collision_y(Map* map);
-    void const check_collision_x(Map* map);
+    virtual void const check_collision_y(Map* map);
+    virtual void const check_collision_x(Map* map);
 
 
     void move_left()    { m_movement.x = -1.0f; };
@@ -102,21 +98,13 @@ public:
     void move_up()      { m_movement.y = 1.0f; };
     void move_down()    { m_movement.y = -1.0f; };
 
-    void ai_activate(Entity* player, float delta_time);
-    void ai_float(Entity* player, float delta_time);
-    void ai_jump(Entity* player, float delta_time);
-    void ai_shoot(Entity* player, float delta_time);
-
-    void shoot_projectile(glm::vec3 direction, float speed, glm::vec3 scale, glm::vec3 size);
+    virtual void shoot_projectile(glm::vec3 direction, float speed, glm::vec3 scale, glm::vec3 size);
 
     void activate();
     void deactivate();
 
 
     // ————— GETTERS ————— //
-    EntityType const get_entity_type()    const { return m_entity_type;     };
-    AIType     const get_ai_type()        const { return m_ai_type;         };
-    AIState    const get_ai_state()       const { return m_ai_state;        };
     glm::vec3  const get_position()       const { return m_position;        };
     glm::vec3  const get_movement()       const { return m_movement;        };
     glm::vec3  const get_velocity()       const { return m_velocity;        };
@@ -127,11 +115,9 @@ public:
     int        const get_width()          const { return m_width;           };
     int        const get_height()         const { return m_height;          };
     bool       const get_active()         const { return m_is_active;       };
+    Entity*    const get_projectile()     const { return m_projectile_pointer;};
 
     // ————— SETTERS ————— //
-    void const set_entity_type(EntityType new_entity_type)  { m_entity_type = new_entity_type;      };
-    void const set_ai_type(AIType new_ai_type)              { m_ai_type = new_ai_type;              };
-    void const set_ai_state(AIState new_state)              { m_ai_state = new_state;               };
     void const set_position(glm::vec3 new_position)         { m_position = new_position;            };
     void const set_movement(glm::vec3 new_movement)         { m_movement = new_movement;            };
     void const set_velocity(glm::vec3 new_velocity)         { m_velocity = new_velocity;            };

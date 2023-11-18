@@ -14,6 +14,8 @@
 #include "ShaderProgram.h"
 #include "Utility.h"
 #include "Entity.h"
+#include "Player.h"
+#include "Enemy.h"
 #include "Map.h"
 
 /**
@@ -23,8 +25,8 @@ struct GameState
 {
     // ————— GAME OBJECTS ————— //
     Map *map;
-    Entity *player;
-    Entity *enemies;
+    Player *player;
+    Enemy *enemies;
     
     // ————— AUDIO ————— //
     Mix_Music *bgm;

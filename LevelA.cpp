@@ -49,8 +49,7 @@ void LevelA::initialise()
      George's Stuff
      */
     // Existing
-    m_state.player = new Entity();
-    m_state.player->set_entity_type(PLAYER);
+    m_state.player = new Player();
     m_state.player->set_position(glm::vec3(5.0f, -2.0f, 0.0f));
     m_state.player->set_movement(glm::vec3(0.0f));
     m_state.player->set_speed(2.5f);
@@ -70,7 +69,7 @@ void LevelA::initialise()
     m_state.player->m_animation_cols   = 4;
     m_state.player->m_animation_rows   = 4;
     m_state.player->set_height(0.8f);
-    m_state.player->set_width(0.6f);
+    m_state.player->set_width(0.3f);
     
     // Jumping
     m_state.player->m_jumping_power = 5.0f;
@@ -78,7 +77,7 @@ void LevelA::initialise()
     /**
      Enemies' stuff */
 
-    m_state.enemies = new Entity[ENEMY_COUNT];
+    m_state.enemies = new Enemy[ENEMY_COUNT];
 
     //enemy 1
     m_state.enemies[0].m_walking[m_state.enemies[0].LEFT] = new int[4] { 1, 5, 9, 13 };
@@ -92,7 +91,6 @@ void LevelA::initialise()
     m_state.enemies[0].m_animation_cols = 4;
     m_state.enemies[0].m_animation_rows = 4;
     
-    m_state.enemies[0].set_entity_type(ENEMY);
     m_state.enemies[0].set_ai_type(FLOATER);
     m_state.enemies[0].set_ai_state(IDLE);
     m_state.enemies[0].m_texture_id = Utility::load_texture("assets/images/floater.png");
@@ -118,7 +116,6 @@ void LevelA::initialise()
     m_state.enemies[1].m_animation_cols = 4;
     m_state.enemies[1].m_animation_rows = 4;
 
-    m_state.enemies[1].set_entity_type(ENEMY);
     m_state.enemies[1].set_ai_type(JUMPER);
     m_state.enemies[1].set_ai_state(ATTACKING);
     m_state.enemies[1].m_texture_id = Utility::load_texture("assets/images/jumper.png");
@@ -142,7 +139,6 @@ void LevelA::initialise()
     m_state.enemies[2].m_animation_cols = 4;
     m_state.enemies[2].m_animation_rows = 4;
 
-    m_state.enemies[2].set_entity_type(ENEMY);
     m_state.enemies[2].set_ai_type(SHOOTER);
     m_state.enemies[2].set_ai_state(IDLE);
     m_state.enemies[2].m_texture_id = Utility::load_texture("assets/images/shooter.png");
