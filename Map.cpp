@@ -122,15 +122,28 @@ bool Map::is_solid(glm::vec3 position, float *penetration_x, float *penetration_
     // If the tile index is 0 or 1 i.e. an open space, it is not solid
     int tile = m_level_data[tile_y * m_width + tile_x];
     if (tile <= 1) return false;
+
+    if (tile == 6 || tile == 7) {
+        float tile_center_x = (tile_x * m_tile_size);
+        float tile_center_y = -(tile_y * m_tile_size) + (m_tile_size / 4); //Adjusted for half - tile
+        //std::cout << tile_center_x << " " << tile_center_y << std::endl;
+
+        *penetration_x = (m_tile_size / 2) - fabs(position.x - tile_center_x);
+        *penetration_y = (m_tile_size / 4.0f) - fabs(position.y - tile_center_y);// Adjusted for half-tile
+
+        std::cout << *penetration_x << " " << *penetration_y << std::endl;
+    }
+    else {
+        // And we likely have some overlap
+        float tile_center_x = (tile_x * m_tile_size);
+        float tile_center_y = -(tile_y * m_tile_size);
+
+        // And because we likely have some overlap, we adjust for that
+        *penetration_x = (m_tile_size / 2) - fabs(position.x - tile_center_x);
+        *penetration_y = (m_tile_size / 2) - fabs(position.y - tile_center_y);
+        //std::cout << *penetration_x << " " << *penetration_y << std::endl;
+    }
     
-    // And we likely have some overlap
-    float tile_center_x = (tile_x  * m_tile_size);
-    float tile_center_y = -(tile_y * m_tile_size);
-    
-    // And because we likely have some overlap, we adjust for that
-    *penetration_x = (m_tile_size / 2) - fabs(position.x - tile_center_x);
-    *penetration_y = (m_tile_size / 2) - fabs(position.y - tile_center_y);
-    //std::cout << *penetration_x << " " << *penetration_y << std::endl;
     
     return true;
 }
