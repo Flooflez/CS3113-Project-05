@@ -62,7 +62,7 @@ void LevelA::initialise()
     m_state.player->m_walking[m_state.player->UP]    = new int[4] { 2, 6, 10, 14 };
     m_state.player->m_walking[m_state.player->DOWN]  = new int[4] { 0, 4, 8,  12 };
 
-    m_state.player->m_animation_indices = m_state.player->m_walking[m_state.player->RIGHT];  // start George looking left
+    m_state.player->m_animation_indices = m_state.player->m_walking[m_state.player->RIGHT];
     m_state.player->m_animation_frames = 4;
     m_state.player->m_animation_index  = 0;
     m_state.player->m_animation_time   = 0.0f;
@@ -84,7 +84,7 @@ void LevelA::initialise()
     m_state.enemies[0].m_walking[m_state.enemies[0].RIGHT] = new int[4] { 3, 7, 11, 15 };
     m_state.enemies[0].m_walking[m_state.enemies[0].UP] = new int[4] { 2, 6, 10, 14 };
     m_state.enemies[0].m_walking[m_state.enemies[0].DOWN] = new int[4] { 0, 4, 8, 12 };
-    m_state.enemies[0].m_animation_indices = m_state.enemies[0].m_walking[m_state.enemies[0].RIGHT];  // start enemy looking left
+    m_state.enemies[0].m_animation_indices = m_state.enemies[0].m_walking[m_state.enemies[0].RIGHT];
     m_state.enemies[0].m_animation_frames = 4;
     m_state.enemies[0].m_animation_index = 0;
     m_state.enemies[0].m_animation_time = 0.0f;
@@ -105,7 +105,7 @@ void LevelA::initialise()
     m_state.enemies[1].m_walking[m_state.enemies[1].RIGHT] = new int[4] { 3, 7, 11, 15 };
     m_state.enemies[1].m_walking[m_state.enemies[1].UP] = new int[4] { 2, 6, 10, 14 };
     m_state.enemies[1].m_walking[m_state.enemies[1].DOWN] = new int[4] { 0, 4, 8, 12 };
-    m_state.enemies[1].m_animation_indices = m_state.enemies[1].m_walking[m_state.enemies[1].RIGHT];  // start enemy looking left
+    m_state.enemies[1].m_animation_indices = m_state.enemies[1].m_walking[m_state.enemies[1].RIGHT];
     m_state.enemies[1].m_animation_frames = 4;
     m_state.enemies[1].m_animation_index = 0;
     m_state.enemies[1].m_animation_time = 0.0f;
@@ -126,7 +126,7 @@ void LevelA::initialise()
     m_state.enemies[2].m_walking[m_state.enemies[2].RIGHT] = new int[4] { 3, 7, 11, 15 };
     m_state.enemies[2].m_walking[m_state.enemies[2].UP] = new int[4] { 2, 6, 10, 14 };
     m_state.enemies[2].m_walking[m_state.enemies[2].DOWN] = new int[4] { 0, 4, 8, 12 };
-    m_state.enemies[2].m_animation_indices = m_state.enemies[2].m_walking[m_state.enemies[2].RIGHT];  // start enemy looking left
+    m_state.enemies[2].m_animation_indices = m_state.enemies[2].m_walking[m_state.enemies[2].RIGHT];
     m_state.enemies[2].m_animation_frames = 4;
     m_state.enemies[2].m_animation_index = 0;
     m_state.enemies[2].m_animation_time = 0.0f;

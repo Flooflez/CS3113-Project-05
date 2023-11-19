@@ -143,7 +143,7 @@ void initialise()
     g_levels[2] = g_level_c;
 
     // Start at level A
-    switch_to_scene(g_levels[0]);
+    switch_to_scene(g_levels[1]);
 
     
 
