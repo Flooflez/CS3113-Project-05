@@ -1,37 +1,5 @@
 #include "Player.h"
 
-void const Player::check_collision_y(Entity* collidable_entities, int collidable_entity_count)
-{
-    for (int i = 0; i < collidable_entity_count; i++)
-    {
-        Entity* collidable_entity = &collidable_entities[i];
-
-        if (check_collision(collidable_entity))
-        {
-            if (m_velocity.y >= 0) {
-                deactivate();
-            }
-            else if (m_velocity.y < 0) {
-                collidable_entity->deactivate();
-                m_base_velocity.y = m_jumping_power / 2.0f; //mini jump when stomping
-            }
-        }
-    }
-}
-
-void const Player::check_collision_x(Entity* collidable_entities, int collidable_entity_count)
-{
-    for (int i = 0; i < collidable_entity_count; i++)
-    {
-        Entity* collidable_entity = &collidable_entities[i];
-
-        if (check_collision(collidable_entity))
-        {
-            deactivate();
-        }
-
-    }
-}
 
 void Player::update(float delta_time, Entity* player, Entity* objects, int object_count, Map* map)
 {
@@ -69,10 +37,8 @@ void Player::update(float delta_time, Entity* player, Entity* objects, int objec
     // We make two calls to our check_collision methods, one for the collidable objects and one for
     // the map.
     m_position.x += m_velocity.x * delta_time;
-    check_collision_x(objects, object_count);
     Entity::check_collision_x(map);
     m_position.y += m_velocity.y * delta_time;
-    check_collision_y(objects, object_count);
     Entity::check_collision_y(map);
 
     if (m_is_jumping)

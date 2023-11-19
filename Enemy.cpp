@@ -15,7 +15,12 @@ void Enemy::ai_activate(Entity* player, float delta_time)
 
 void Enemy::ai_basic(Entity* player, float delta_time)
 {
-    
+    m_attack_timer += delta_time;
+    if (m_attack_timer > 2.0f) {
+        m_attack_timer = 0.0f;
+        m_movement *= -1.0f;
+        m_animation_indices = m_walking[(int)((m_movement.x / 2.0f) + 0.5f)];
+    }
 }
 
 
@@ -59,6 +64,11 @@ void Enemy::update(float delta_time, Entity* player, Entity* objects, int object
     Entity::check_collision_x(map);
     m_position.y += m_velocity.y * delta_time;
     Entity::check_collision_y(map);
+
+    if (check_collision(player))
+    {
+        player->deactivate();
+    }
 
     m_model_matrix = glm::mat4(1.0f);
     m_model_matrix = glm::translate(m_model_matrix, m_position);
