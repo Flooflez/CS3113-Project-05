@@ -93,7 +93,7 @@ void LevelA::initialise()
     
     m_state.enemies[0].set_ai_type(BASIC);
     m_state.enemies[0].set_ai_state(WALKING);
-    m_state.enemies[0].m_texture_id = Utility::load_texture("assets/images/player.png");
+    m_state.enemies[0].m_texture_id = Utility::load_texture("assets/images/enemy.png");
     m_state.enemies[0].set_position(glm::vec3(13.0f,-0.1f, 0.0f));
     m_state.enemies[0].set_speed(0.7f);
     m_state.enemies[0].set_movement(glm::vec3(1.0f,0.0f,0.0f));
@@ -114,7 +114,7 @@ void LevelA::initialise()
 
     m_state.enemies[1].set_ai_type(BASIC);
     m_state.enemies[1].set_ai_state(WALKING);
-    m_state.enemies[1].m_texture_id = Utility::load_texture("assets/images/player.png");
+    m_state.enemies[1].m_texture_id = Utility::load_texture("assets/images/enemy.png");
     m_state.enemies[1].set_position(glm::vec3(24.0f, -0.1f, 0.0f));
     m_state.enemies[1].set_speed(0.7f);
     m_state.enemies[1].set_movement(glm::vec3(1.0f, 0.0f, 0.0f));
@@ -135,7 +135,7 @@ void LevelA::initialise()
 
     m_state.enemies[2].set_ai_type(BASIC);
     m_state.enemies[2].set_ai_state(WALKING);
-    m_state.enemies[2].m_texture_id = Utility::load_texture("assets/images/player.png");
+    m_state.enemies[2].m_texture_id = Utility::load_texture("assets/images/enemy.png");
     m_state.enemies[2].set_position(glm::vec3(37.0f, -3.1f, 0.0f));
     m_state.enemies[2].set_speed(0.7f);
     m_state.enemies[2].set_movement(glm::vec3(1.0f, 0.0f, 0.0f));
@@ -150,7 +150,6 @@ void LevelA::initialise()
     m_state.goal->m_walking[m_state.goal->RIGHT] = new int[4] { 3, 7, 11, 15 };
     m_state.goal->m_walking[m_state.goal->UP] = new int[4] { 2, 6, 10, 14 };
     m_state.goal->m_walking[m_state.goal->DOWN] = new int[4] { 0, 4, 8, 12 };
-    m_state.goal->m_animation_indices = m_state.goal->m_walking[m_state.goal->RIGHT];
     m_state.goal->m_animation_frames = 4;
     m_state.goal->m_animation_index = 0;
     m_state.goal->m_animation_time = 0.0f;
@@ -160,7 +159,7 @@ void LevelA::initialise()
     m_state.goal->set_position(glm::vec3(49.0f, -8.1f, 0.0f));
     m_state.goal->set_speed(0.0f);
     m_state.goal->set_movement(glm::vec3(-1.0f, 0.0f, 0.0f));
-    m_state.goal->m_animation_indices = m_state.goal->m_walking[m_state.enemies[0].LEFT];
+    m_state.goal->m_animation_indices = m_state.goal->m_walking[m_state.goal->LEFT];
     m_state.enemies->set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
 
     

@@ -42,9 +42,9 @@
 const int   WINDOW_WIDTH    = 640,
             WINDOW_HEIGHT   = 480;
 
-const float BG_RED      = 0.1922f,
-            BG_BLUE     = 0.549f,
-            BG_GREEN    = 0.9059f,
+const float BG_RED      = 0.09f,
+            BG_BLUE     = 0.45f,
+            BG_GREEN    = 0.20f,
             BG_OPACITY  = 1.0f;
 
 const int   VIEWPORT_X = 0,
@@ -130,7 +130,7 @@ void initialise()
 
     glUseProgram(g_shader_program.get_program_id());
 
-    glClearColor(BG_RED, BG_BLUE, BG_GREEN, BG_OPACITY);
+    glClearColor(BG_RED, BG_GREEN, BG_BLUE, BG_OPACITY);
 
     // ————— LEVEL A SETUP ————— //
 
@@ -143,7 +143,7 @@ void initialise()
     g_levels[2] = g_level_c;
 
     // Start at level A
-    switch_to_scene(g_levels[1]);
+    switch_to_scene(g_levels[0]);
 
     
 
