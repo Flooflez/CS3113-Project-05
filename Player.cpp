@@ -36,10 +36,15 @@ void Player::update(float delta_time, Entity* player, Entity* objects, int objec
 
     // We make two calls to our check_collision methods, one for the collidable objects and one for
     // the map.
-    m_position.x += m_velocity.x * delta_time;
-    Entity::check_collision_x(map);
     m_position.y += m_velocity.y * delta_time;
     Entity::check_collision_y(map);
+    
+    m_position.x += m_velocity.x * delta_time;
+    Entity::check_collision_x(map);
+
+    
+    
+    
 
     if (m_is_jumping)
     {
