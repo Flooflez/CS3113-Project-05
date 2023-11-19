@@ -148,19 +148,19 @@ void const Entity::check_collision_y(Map* map)
     float penetration_y = 0;
 
     // If the map is solid, check the top three points
-    if (map->is_solid(top, &penetration_x, &penetration_y) && m_velocity.y > 0)
+    if (map->is_solid(top, &penetration_x, &penetration_y) == 2 && m_velocity.y > 0)
     {
         m_position.y -= penetration_y;
         m_base_velocity.y = 0;
         m_collided_top = true;
     }
-    else if (map->is_solid(top_left, &penetration_x, &penetration_y) && m_velocity.y > 0)
+    else if (map->is_solid(top_left, &penetration_x, &penetration_y) == 2 && m_velocity.y > 0)
     {
         m_position.y -= penetration_y;
         m_base_velocity.y = 0;
         m_collided_top = true;
     }
-    else if (map->is_solid(top_right, &penetration_x, &penetration_y) && m_velocity.y > 0)
+    else if (map->is_solid(top_right, &penetration_x, &penetration_y) == 2 && m_velocity.y > 0)
     {
         m_position.y -= penetration_y;
         m_base_velocity.y = 0;
@@ -168,19 +168,19 @@ void const Entity::check_collision_y(Map* map)
     }
 
     // And the bottom three points
-    if (map->is_solid(bottom, &penetration_x, &penetration_y) && m_velocity.y < 0)
+    if (map->is_solid(bottom, &penetration_x, &penetration_y) == 2 && m_velocity.y < 0)
     {
         m_position.y += penetration_y;
         m_base_velocity.y = 0;
         m_collided_bottom = true;
     }
-    else if (map->is_solid(bottom_left, &penetration_x, &penetration_y) && m_velocity.y < 0)
+    else if (map->is_solid(bottom_left, &penetration_x, &penetration_y) == 2 && m_velocity.y < 0)
     {
         m_position.y += penetration_y;
         m_base_velocity.y = 0;
         m_collided_bottom = true;
     }
-    else if (map->is_solid(bottom_right, &penetration_x, &penetration_y) && m_velocity.y < 0)
+    else if (map->is_solid(bottom_right, &penetration_x, &penetration_y) == 2 && m_velocity.y < 0)
     {
         m_position.y += penetration_y;
         m_base_velocity.y = 0;

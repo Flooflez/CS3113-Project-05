@@ -98,7 +98,7 @@ void Map::render(ShaderProgram *program)
     glDisableVertexAttribArray(program->get_position_attribute());
 }
 
-bool Map::is_solid(glm::vec3 position, float *penetration_x, float *penetration_y)
+int Map::is_solid(glm::vec3 position, float *penetration_x, float *penetration_y)
 {
     // The penetration between the map and the object
     // The reason why these are pointers is because we want to reassign values
@@ -109,41 +109,45 @@ bool Map::is_solid(glm::vec3 position, float *penetration_x, float *penetration_
     *penetration_y = 0;
 
     // If we are out of bounds, it is not solid
-    if (position.x < m_left_bound || position.x > m_right_bound)  return false;
-    if (position.y > m_top_bound  || position.y < m_bottom_bound) return false;
+    if (position.x < m_left_bound || position.x > m_right_bound)  return 0;
+    if (position.y > m_top_bound  || position.y < m_bottom_bound) return 0;
     
     int tile_x = floor((position.x + (m_tile_size / 2))  / m_tile_size);
     int tile_y = -(ceil(position.y - (m_tile_size / 2))) / m_tile_size; // Our array counts up as Y goes down.
     
     // If the tile index is negative or greater than the dimensions, it is not solid
-    if (tile_x < 0 || tile_x >= m_width)  return false;
-    if (tile_y < 0 || tile_y >= m_height) return false;
+    if (tile_x < 0 || tile_x >= m_width)  return 0;
+    if (tile_y < 0 || tile_y >= m_height) return 0;
     
     // If the tile index is 0 or 1 i.e. an open space, it is not solid
     int tile = m_level_data[tile_y * m_width + tile_x];
-    if (tile <= 1) return false;
+    if (tile <= 1) return 0;
 
+
+    float tile_center_x = (tile_x * m_tile_size);
+    *penetration_x = (m_tile_size / 2) - fabs(position.x - tile_center_x);
     if (tile == 6 || tile == 7) {
-        float tile_center_x = (tile_x * m_tile_size);
+        
         float tile_center_y = -(tile_y * m_tile_size) + (m_tile_size / 4); //Adjusted for half - tile
         //std::cout << tile_center_x << " " << tile_center_y << std::endl;
 
-        *penetration_x = (m_tile_size / 2) - fabs(position.x - tile_center_x);
+        
         *penetration_y = (m_tile_size / 4.0f) - fabs(position.y - tile_center_y);// Adjusted for half-tile
+        if (*penetration_y < 0) {
+            return 1; //y not, x is solid;
+        }
 
-        std::cout << *penetration_x << " " << *penetration_y << std::endl;
+        //std::cout << *penetration_x << " " << *penetration_y << std::endl;
     }
     else {
         // And we likely have some overlap
-        float tile_center_x = (tile_x * m_tile_size);
         float tile_center_y = -(tile_y * m_tile_size);
 
         // And because we likely have some overlap, we adjust for that
-        *penetration_x = (m_tile_size / 2) - fabs(position.x - tile_center_x);
         *penetration_y = (m_tile_size / 2) - fabs(position.y - tile_center_y);
         //std::cout << *penetration_x << " " << *penetration_y << std::endl;
     }
     
     
-    return true;
+    return 2; //fully solid
 }
