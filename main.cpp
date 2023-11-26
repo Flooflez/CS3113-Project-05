@@ -65,6 +65,7 @@ const std::string DEATH_MESSAGE = "YOU LOSE! BETTER LUCK NEXT TIME!",
 
 // ————— GLOBAL VARIABLES ————— //
 Scene*  g_current_scene;
+int g_current_scene_index = 0;
 Menu* g_menu;
 LevelA* g_level_a;
 LevelB* g_level_b;
@@ -86,6 +87,8 @@ float g_accumulator     = 0.0f;
 GLuint g_text_texture_id;
 
 Scene* g_levels[4];
+
+int g_lives = 3;
 
 void lose_game() {
     g_game_over = true;
@@ -197,9 +200,9 @@ void process_input()
                 //start game
                 if (!g_game_start) {
                     g_game_start = true;
-                    g_current_scene->m_state.next_scene_id = 0;
+                    g_current_scene->m_state.next_scene_id = 1;
                 }
-
+                break;
             default:
                 break;
             }
@@ -248,6 +251,23 @@ void update()
     while (delta_time >= FIXED_TIMESTEP) {
         // ————— UPDATING THE SCENE (i.e. map, character, enemies...) ————— //
         g_current_scene->update(FIXED_TIMESTEP);
+
+        if (!g_current_scene->m_state.player->get_active()) {
+            g_lives--;
+            if (g_lives <= 0) {
+                //game over!
+                lose_game();
+            }
+            else {
+                //restart level
+                switch_to_scene(g_levels[g_current_scene_index]);
+            }
+        }
+        else {
+            if (g_current_scene->m_state.player->get_position().y < -10.5f) {
+                g_current_scene->m_state.player->deactivate();
+            }
+        }
 
         delta_time -= FIXED_TIMESTEP;
     }
@@ -314,7 +334,10 @@ int main(int argc, char* argv[])
         process_input();
         update();
 
-        if (g_current_scene->m_state.next_scene_id >= 0) switch_to_scene(g_levels[g_current_scene->m_state.next_scene_id]);
+        if (g_current_scene->m_state.next_scene_id >= 0) {
+            g_current_scene_index = g_current_scene->m_state.next_scene_id;
+            switch_to_scene(g_levels[g_current_scene_index]);
+        }
 
         render();
     }
