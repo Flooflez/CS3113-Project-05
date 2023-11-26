@@ -38,6 +38,7 @@
 #include "LevelB.h"
 #include "LevelC.h"
 #include "Menu.h"
+#include "Win.h"
 
 // ————— CONSTANTS ————— //
 const int   WINDOW_WIDTH    = 640,
@@ -60,8 +61,7 @@ const char  FONT_FILEPATH[] = "assets/images/font1.png";
 
 const float MILLISECONDS_IN_SECOND = 1000.0;
 
-const std::string DEATH_MESSAGE = "YOU LOSE! BETTER LUCK NEXT TIME!",
-                  WIN_MESSAGE   = "YOU WIN!! YOU POPPED THEM ALL!!";
+const std::string DEATH_MESSAGE = "YOU LOSE! BETTER LUCK NEXT TIME!";
 
 // ————— GLOBAL VARIABLES ————— //
 Scene*  g_current_scene;
@@ -70,6 +70,7 @@ Menu* g_menu;
 LevelA* g_level_a;
 LevelB* g_level_b;
 LevelC* g_level_c;
+Win* g_win_scene;
 
 SDL_Window* g_display_window;
 bool g_game_is_running = true;
@@ -86,7 +87,7 @@ float g_accumulator     = 0.0f;
 
 GLuint g_text_texture_id;
 
-Scene* g_levels[4];
+Scene* g_levels[5];
 
 int g_lives = 3;
 
@@ -95,10 +96,6 @@ void lose_game() {
     g_display_message = DEATH_MESSAGE;
 }
 
-void win_game() {
-    g_game_over = true;
-    g_display_message = WIN_MESSAGE;
-}
 
 
 void switch_to_scene(Scene* scene)
@@ -145,11 +142,13 @@ void initialise()
     g_level_a = new LevelA();
     g_level_b = new LevelB();
     g_level_c = new LevelC();
+    g_win_scene = new Win();
 
     g_levels[0] = g_menu;
     g_levels[1] = g_level_a;
     g_levels[2] = g_level_b;
     g_levels[3] = g_level_c;
+    g_levels[4] = g_win_scene;
 
     // Start at menu
     switch_to_scene(g_levels[0]);
@@ -162,7 +161,6 @@ void initialise()
 
     // ----- TEXT ----- //
     g_text_texture_id = Utility::load_texture(FONT_FILEPATH);
-    g_display_message = WIN_MESSAGE;
 }
 
 void process_input()
@@ -304,12 +302,18 @@ void render()
 
     // ----- TEXT ----- //
     if (g_game_over) {
+        float draw_x = 0.5167255f;
         if (g_current_scene->get_state().player->get_position().x > LEVEL_LEFT_EDGE) {
-            Utility::draw_text(g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(g_current_scene->m_state.player->get_position().x - 4.5f, -0.75f, 0));
+            draw_x = g_current_scene->m_state.player->get_position().x - 4.5f;
+            
         }
-        else {
-            Utility::draw_text(g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(0.5167255f, -0.75f, 0));
+        float draw_y = -5.0f;
+        if (g_current_scene->get_state().player->get_position().y > -5.5f) {
+            draw_y = -g_current_scene->get_state().player->get_position().y + 2.0f;
         }
+
+
+        Utility::draw_text(g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(draw_x, draw_y, 0));
         
     }
 

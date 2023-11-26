@@ -53,4 +53,6 @@ public:
     // ————— GETTERS ————— //
     GameState const get_state()             const { return m_state;             }
     int       const get_number_of_enemies() const { return m_number_of_enemies; }
+protected:
+    GLuint text_texture_id;
 };

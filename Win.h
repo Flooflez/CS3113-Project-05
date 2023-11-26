@@ -1,10 +1,10 @@
 #pragma once
 #include "Scene.h"
 
-class Menu : public Scene {
+class Win : public Scene {
 public:
     // ————— CONSTRUCTOR ————— //
-    ~Menu();
+    ~Win();
 
     // ————— METHODS ————— //
     void initialise() override;
