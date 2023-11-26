@@ -37,6 +37,7 @@
 #include "LevelA.h"
 #include "LevelB.h"
 #include "LevelC.h"
+#include "Menu.h"
 
 // ————— CONSTANTS ————— //
 const int   WINDOW_WIDTH    = 640,
@@ -64,6 +65,7 @@ const std::string DEATH_MESSAGE = "YOU LOSE! BETTER LUCK NEXT TIME!",
 
 // ————— GLOBAL VARIABLES ————— //
 Scene*  g_current_scene;
+Menu* g_menu;
 LevelA* g_level_a;
 LevelB* g_level_b;
 LevelC* g_level_c;
@@ -72,6 +74,7 @@ SDL_Window* g_display_window;
 bool g_game_is_running = true;
 bool g_game_over = false;
 bool g_game_win = false;
+bool g_game_start = false;
 std::string g_display_message;
 
 ShaderProgram g_shader_program;
@@ -82,7 +85,7 @@ float g_accumulator     = 0.0f;
 
 GLuint g_text_texture_id;
 
-Scene* g_levels[3];
+Scene* g_levels[4];
 
 void lose_game() {
     g_game_over = true;
@@ -121,6 +124,7 @@ void initialise()
     glViewport(VIEWPORT_X, VIEWPORT_Y, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
     g_shader_program.load(V_SHADER_PATH, F_SHADER_PATH);
+    Utility::set_shader_program(&g_shader_program);
 
     g_view_matrix = glm::mat4(1.0f);
     g_projection_matrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
@@ -132,18 +136,20 @@ void initialise()
 
     glClearColor(BG_RED, BG_GREEN, BG_BLUE, BG_OPACITY);
 
-    // ————— LEVEL A SETUP ————— //
+    // ————— LEVEL SETUP ————— //
 
+    g_menu = new Menu();
     g_level_a = new LevelA();
     g_level_b = new LevelB();
     g_level_c = new LevelC();
 
-    g_levels[0] = g_level_a;
-    g_levels[1] = g_level_b;
-    g_levels[2] = g_level_c;
+    g_levels[0] = g_menu;
+    g_levels[1] = g_level_a;
+    g_levels[2] = g_level_b;
+    g_levels[3] = g_level_c;
 
-    // Start at level A
-    switch_to_scene(g_levels[2]);
+    // Start at menu
+    switch_to_scene(g_levels[0]);
 
     
 
@@ -184,9 +190,15 @@ void process_input()
                 {
                     g_current_scene->m_state.player->m_is_jumping = true;
                     Mix_PlayChannel(-1, g_current_scene->m_state.jump_sfx, 0);
-                    Mix_Volume(-1,MIX_MAX_VOLUME / 15 );
+                    Mix_Volume(-1, MIX_MAX_VOLUME / 15);
                 }
                 break;
+            case SDLK_RETURN:
+                //start game
+                if (!g_game_start) {
+                    g_game_start = true;
+                    g_current_scene->m_state.next_scene_id = 0;
+                }
 
             default:
                 break;
@@ -259,22 +271,6 @@ void update()
 
     g_view_matrix = glm::translate(g_view_matrix, glm::vec3(cam_x, cam_y, 0));
 
-    if (!g_game_over) {
-        int active_count = 0;
-        for (size_t i = 0; i < g_current_scene->get_number_of_enemies(); i++) {
-            if (g_current_scene->get_state().enemies[i].get_active()) {
-                active_count += 1;
-            }
-        }
-        if (active_count == 0) {
-            win_game();
-        }
-
-        if (!g_current_scene->get_state().player->get_active()) {
-            lose_game();
-        }
-    }
-    
 }
 
 void render()
@@ -289,10 +285,10 @@ void render()
     // ----- TEXT ----- //
     if (g_game_over) {
         if (g_current_scene->get_state().player->get_position().x > LEVEL_LEFT_EDGE) {
-            Utility::draw_text(&g_shader_program, g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(g_current_scene->m_state.player->get_position().x - 4.5f, -0.75f, 0));
+            Utility::draw_text(g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(g_current_scene->m_state.player->get_position().x - 4.5f, -0.75f, 0));
         }
         else {
-            Utility::draw_text(&g_shader_program, g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(0.5167255f, -0.75f, 0));
+            Utility::draw_text(g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(0.5167255f, -0.75f, 0));
         }
         
     }

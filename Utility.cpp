@@ -21,6 +21,8 @@
 #include <SDL_image.h>
 #include "stb_image.h"
 
+ShaderProgram* Utility::program = nullptr;
+
 GLuint Utility::load_texture(const char* filepath) {
     int width, height, number_of_components;
     unsigned char* image = stbi_load(filepath, &width, &height, &number_of_components, STBI_rgb_alpha);
@@ -47,7 +49,7 @@ GLuint Utility::load_texture(const char* filepath) {
     return texture_id;
 }
 
-void Utility::draw_text(ShaderProgram *program, GLuint font_texture_id, std::string text, float screen_size, float spacing, glm::vec3 position)
+void Utility::draw_text(GLuint font_texture_id, std::string text, float screen_size, float spacing, glm::vec3 position)
 {
     float width = 1.0f / FONTBANK_SIZE;
     float height = 1.0f / FONTBANK_SIZE;

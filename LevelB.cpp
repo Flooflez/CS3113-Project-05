@@ -167,7 +167,7 @@ void LevelB::update(float delta_time)
     }
 
     if (m_state.goal->level_win()) {
-        m_state.next_scene_id = 2; //go to level C
+        m_state.next_scene_id = 3; //go to level C
     }
 }
 

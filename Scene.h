@@ -26,7 +26,7 @@ struct GameState
 {
     // ————— GAME OBJECTS ————— //
     Map *map;
-    Player *player;
+    Player *player = nullptr;
     Enemy *enemies;
     Goal* goal;
     
