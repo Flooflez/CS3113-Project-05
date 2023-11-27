@@ -163,16 +163,6 @@ void LevelA::initialise()
     m_state.enemies->set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
 
     
-    /**
-     BGM and SFX
-     */
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
-    
-    m_state.bgm = Mix_LoadMUS("assets/audio/badsong.wav");
-    Mix_PlayMusic(m_state.bgm, -1);
-    //Mix_VolumeMusic(2.3f);
-    Mix_VolumeMusic(0.0f);
-    
     m_state.jump_sfx = Mix_LoadWAV("assets/audio/woop.wav");
 }
 

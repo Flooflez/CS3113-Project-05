@@ -30,10 +30,6 @@ void Menu::initialise()
      */
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 
-    m_state.bgm = Mix_LoadMUS("assets/audio/badsong.wav");
-    Mix_PlayMusic(m_state.bgm, -1);
-    //Mix_VolumeMusic(2.3f);
-    Mix_VolumeMusic(0.0f);
 
     //fake player so program doesn't crash
     m_state.player = new Player();

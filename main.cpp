@@ -153,6 +153,9 @@ void initialise()
     // Start at menu
     switch_to_scene(g_levels[0]);
 
+    Mix_PlayMusic(Mix_LoadMUS("assets/audio/slight_better_song.wav"), -1);
+    Mix_VolumeMusic(3.0f);
+
     
 
     // ————— BLENDING ————— //
