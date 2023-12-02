@@ -1,5 +1,14 @@
-#include "Goal.h"
+/**
+* Author: Maximilian Ta
+* Assignment: Platformer
+* Date due: 2023-12-02, 11:59pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+**/
 
+#include "Goal.h"
 
 void Goal::update(float delta_time, Entity* player, Entity* objects, int object_count, Map* map)
 {
