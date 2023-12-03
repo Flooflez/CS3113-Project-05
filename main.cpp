@@ -108,7 +108,7 @@ void initialise()
 {
     // ————— VIDEO ————— //
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-    g_display_window = SDL_CreateWindow("Stomp on 'em!",
+    g_display_window = SDL_CreateWindow("Cat Wrangler",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_OPENGL);
@@ -190,7 +190,7 @@ void process_input()
 
             case SDLK_SPACE:
                 // ————— JUMPING ————— //
-                if (g_current_scene->m_state.player->m_collided_bottom)
+                if (g_current_scene->m_state.player->get_active() && g_current_scene->m_state.player->m_collided_bottom)
                 {
                     g_current_scene->m_state.player->m_is_jumping = true;
                     Mix_PlayChannel(-1, g_current_scene->m_state.jump_sfx, 0);
@@ -312,12 +312,10 @@ void render()
         }
         float draw_y = -5.0f;
         if (g_current_scene->get_state().player->get_position().y > -5.5f) {
-            draw_y = -g_current_scene->get_state().player->get_position().y + 2.0f;
+            draw_y = g_current_scene->get_state().player->get_position().y;
         }
 
-
         Utility::draw_text(g_text_texture_id, g_display_message, 0.4f, -0.1f, glm::vec3(draw_x, draw_y, 0));
-        
     }
 
     SDL_GL_SwapWindow(g_display_window);
